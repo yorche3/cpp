@@ -59,15 +59,15 @@ void assertSortsAllCases(SortFn sort, const std::string &algorithm)
 
 TEST(NaiveSortTest, selection_sort)
 {
-    assertSortsAllCases(selection_sort, "selection_sort");
+    assertSortsAllCases(naive_sort::selection_sort, "selection_sort");
 }
 
 TEST(NaiveSortTest, bubble_sort)
 {
-    assertSortsAllCases(bubble_sort, "bubble_sort");
+    assertSortsAllCases(naive_sort::bubble_sort, "bubble_sort");
 }
 
 TEST(NaiveSortTest, insertion_sort)
 {
-    assertSortsAllCases(insertion_sort, "insertion_sort");
+    assertSortsAllCases(naive_sort::insertion_sort, "insertion_sort");
 }
