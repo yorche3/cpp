@@ -16,7 +16,9 @@ std::vector<int> selection_sort(const std::vector<int> arr) {
                 min_idx = j;
             }
         }
-        std::swap(result[i], result[min_idx]);
+        if (min_idx != i) {
+            std::swap(result[i], result[min_idx]);
+        }
     }
     return result;
 }
