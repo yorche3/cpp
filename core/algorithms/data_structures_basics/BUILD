@@ -1,5 +1,8 @@
 cc_library(
     name = "data_structures_basics_lib",
+    srcs = ["src/data_structures_basics.cpp"],
+    hdrs = ["include/data_structures_basics.h"],
+    strip_include_prefix = "include",
     visibility = ["//visibility:public"],
 )
 
