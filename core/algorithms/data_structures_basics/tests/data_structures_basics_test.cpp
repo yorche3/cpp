@@ -18,7 +18,7 @@ constexpr int kHeadValue = 5;
 constexpr int kTopValue = 30;
 constexpr int kReusedValue = 40;
 constexpr int kMissingValue = 99;
-constexpr int kFailureValue = -1;
+constexpr int kFailureValue = data_structures_basics::FAILURE_VALUE;
 
 struct NamedCase {
     const char* name;
@@ -82,7 +82,7 @@ TEST_F(DataStructuresBasicsTests, linkedListOperations)
                  << "LinkedList should expose the value inserted at its head";
          }},
         {"delete first occurrence", [&] {
-             EXPECT_EQ(list.delete_value(kFirstValue), 1)
+             EXPECT_TRUE(list.delete_value(kFirstValue))
                  << "LinkedList should report success when deleting a present value";
              EXPECT_EQ(list.get_head(), kHeadValue)
                  << "LinkedList should preserve its head after deleting the first middle value";
@@ -90,19 +90,19 @@ TEST_F(DataStructuresBasicsTests, linkedListOperations)
                  << "LinkedList should reduce its size after a successful deletion";
          }},
         {"absent value", [&] {
-             EXPECT_EQ(list.delete_value(kMissingValue), kFailureValue)
-                 << "LinkedList should return the failure indicator for an absent value";
+             EXPECT_FALSE(list.delete_value(kMissingValue))
+                 << "LinkedList should report failure for an absent value";
              EXPECT_EQ(list.get_head(), kHeadValue)
                  << "LinkedList should preserve its contents when deleting an absent value";
              EXPECT_EQ(list.size(), 3U)
                  << "LinkedList should preserve its size when deleting an absent value";
          }},
         {"empty the list", [&] {
-             EXPECT_EQ(list.delete_value(kHeadValue), 1)
+             EXPECT_TRUE(list.delete_value(kHeadValue))
                  << "LinkedList should delete its head value";
-             EXPECT_EQ(list.delete_value(kSecondValue), 1)
+             EXPECT_TRUE(list.delete_value(kSecondValue))
                  << "LinkedList should delete its remaining middle value";
-             EXPECT_EQ(list.delete_value(kFirstValue), 1)
+             EXPECT_TRUE(list.delete_value(kFirstValue))
                  << "LinkedList should delete its remaining tail value";
              EXPECT_TRUE(list.is_empty()) << "LinkedList should be empty after all values are deleted";
              EXPECT_EQ(list.size(), 0U) << "LinkedList should have size zero after all values are deleted";
