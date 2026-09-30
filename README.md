@@ -9,6 +9,7 @@ Proyectos en **C++** (C++11 o superior), compilados con **G++** para programas s
 | Módulo | Descripción |
 |--------|-------------|
 | [`core/foundations/`](core/foundations/) | **Fase 0 — Fundamentos**: `hello_world`, `hello_user`, `calculator`, `numbers` |
+| [`core/algorithms/`](core/algorithms/) | **Fase 1 — Algoritmos Puros**: `naive_sort`, `data_structures_basics` |
 
 ---
 
@@ -29,6 +30,14 @@ bazelisk test //...
 
 # Numbers Tests
 cd core/foundations/numbers
+bazelisk test //...
+
+# Naive Sort Tests
+cd core/algorithms/naive_sort
+bazelisk test //...
+
+# Data Structures Basics Tests
+cd core/algorithms/data_structures_basics
 bazelisk test //...
 ```
 
