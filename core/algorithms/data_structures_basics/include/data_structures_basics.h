@@ -5,6 +5,8 @@
 
 namespace data_structures_basics {
 
+constexpr int FAILURE_VALUE = -1;
+
 class Node {
 public:
     explicit Node(int value);
@@ -29,7 +31,7 @@ public:
     int get_head() const;
     void insert_head(int value);
     void insert_tail(int value);
-    int delete_value(int value);
+    bool delete_value(int value);
 
 private:
     Node* head_;
@@ -61,7 +63,7 @@ public:
     ~Queue();
     Queue(const Queue&) = delete;
     Queue& operator=(const Queue&) = delete;
-    
+
     bool is_empty() const;
     std::size_t size() const;
     void enqueue(int value);

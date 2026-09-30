@@ -2,84 +2,209 @@
 
 namespace data_structures_basics {
 
-Node::Node(int) {}
+Node::Node(int value):
+    value_(value),
+    next_(nullptr)
+{}
 
 int Node::get_value() const {
-    return -1;
+    return value_;
 }
 
 Node* Node::get_next() const {
-    return nullptr;
+    return next_;
 }
 
-void Node::set_next(Node*) {}
-
-LinkedList::LinkedList() {}
-
-LinkedList::~LinkedList() {}
-
-int LinkedList::get_head() const {
-    return -1;
+void Node::set_next(Node* next) {
+    next_ = next;
 }
 
-void LinkedList::insert_head(int) {}
+LinkedList::LinkedList():
+    head_(nullptr),
+    tail_(nullptr),
+    count_(0)
+{}
 
-void LinkedList::insert_tail(int) {}
-
-int LinkedList::delete_value(int) {
-    return -1;
+LinkedList::~LinkedList() {
+    Node* current = head_;
+    while (current != nullptr) {
+        Node* temp = current;
+        current = current->get_next();
+        delete temp;
+    }
+    head_ = nullptr;
+    tail_ = nullptr;
+    count_ = 0;
 }
 
 bool LinkedList::is_empty() const {
-    return false;
+    return count_ == 0;
 }
 
 std::size_t LinkedList::size() const {
-    return 0;
+    return count_;
 }
 
-Stack::Stack() {}
-
-Stack::~Stack() {}
-
-void Stack::push(int) {}
-
-int Stack::pop() {
-    return -1;
+int LinkedList::get_head() const {
+    if (is_empty()) {
+        return FAILURE_VALUE;
+    }
+    return head_->get_value();
 }
 
-int Stack::peek() const {
-    return -1;
+void LinkedList::insert_head(int value) {
+    Node* new_node = new Node(value);
+    new_node->set_next(head_);
+    head_ = new_node;
+    if (tail_ == nullptr) {
+        tail_ = new_node;
+    }
+    ++count_;
+}
+
+void LinkedList::insert_tail(int value) {
+    Node* new_node = new Node(value);
+    if (tail_ != nullptr) {
+        tail_->set_next(new_node);
+    }
+    tail_ = new_node;
+    if (head_ == nullptr) {
+        head_ = new_node;
+    }
+    ++count_;
+}
+
+int LinkedList::delete_value(int value) {
+    Node* current = head_;
+    Node* previous = nullptr;
+    while (current != nullptr) {
+        if (current->get_value() == value) {
+            if (previous != nullptr) {
+                previous->set_next(current->get_next());
+            } else {
+                head_ = current->get_next();
+            }
+            if (current == tail_) {
+                tail_ = previous;
+            }
+            delete current;
+            --count_;
+            return value;
+        }
+        previous = current;
+        current = current->get_next();
+    }
+    return FAILURE_VALUE;
+}
+
+Stack::Stack():
+    top_(nullptr),
+    count_(0)
+{}
+
+Stack::~Stack() {
+    Node* current = top_;
+    while (current != nullptr) {
+        Node* temp = current;
+        current = current->get_next();
+        delete temp;
+    }
+    top_ = nullptr;
+    count_ = 0;
 }
 
 bool Stack::is_empty() const {
-    return false;
+    return count_ == 0;
 }
 
 std::size_t Stack::size() const {
-    return 0;
+    return count_;
 }
 
-Queue::Queue() {}
-
-Queue::~Queue() {}
-
-void Queue::enqueue(int) {}
-
-int Queue::dequeue() {
-    return -1;
+void Stack::push(int value) {
+    Node* new_node = new Node(value);
+    new_node->set_next(top_);
+    top_ = new_node;
+    ++count_;
 }
 
-int Queue::peek() const {
-    return -1;
+int Stack::peek() const {
+    if (is_empty()) {
+        return FAILURE_VALUE;
+    }
+    return top_->get_value();
+}
+
+int Stack::pop() {
+    if (is_empty()) {
+        return FAILURE_VALUE;
+    }
+    Node* temp = top_;
+    int value = temp->get_value();
+    top_ = top_->get_next();
+    delete temp;
+    --count_;
+    return value;
+}
+
+Queue::Queue():
+    head_(nullptr),
+    tail_(nullptr),
+    count_(0)
+{}
+
+Queue::~Queue() {
+    Node* current = head_;
+    while (current != nullptr) {
+        Node* temp = current;
+        current = current->get_next();
+        delete temp;
+    }
+    head_ = nullptr;
+    tail_ = nullptr;
+    count_ = 0;
 }
 
 bool Queue::is_empty() const {
-    return false;
+    return count_ == 0;
 }
 
 std::size_t Queue::size() const {
-    return 0;
+    return count_;
+}
+
+void Queue::enqueue(int value) {
+    Node* new_node = new Node(value);
+    if (tail_ != nullptr) {
+        tail_->set_next(new_node);
+    }
+    tail_ = new_node;
+    if (head_ == nullptr) {
+        head_ = new_node;
+    }
+    ++count_;
+}
+
+int Queue::peek() const {
+    if (is_empty()) {
+        return FAILURE_VALUE;
+    }
+    return head_->get_value();
+}
+
+int Queue::dequeue() {
+    if (is_empty()) {
+        return FAILURE_VALUE;
+    }
+    Node* temp = head_;
+    int value = temp->get_value();
+    head_ = head_->get_next();
+    if (head_ == nullptr) {
+        tail_ = nullptr;
+    }
+    delete temp;
+    --count_;
+    return value;
 }
 
 } // namespace data_structures_basics
