@@ -10,6 +10,7 @@ Implementación de la fase [Algorithms Pure](https://yorche3.github.io/programmi
 |--------|--------|---------------------------|
 | [`naive_sort/`](naive_sort/) | ✅ | **Ordenamiento elemental** ($O(n^2)$): `selection_sort`, `bubble_sort`, `insertion_sort`. / **Elementary sorting** ($O(n^2)$): `selection_sort`, `bubble_sort`, `insertion_sort`. |
 | [`data_structures_basics/`](data_structures_basics/) | ✅ | **Estructuras de datos básicas**: `Node`, `LinkedList`, `Stack`, `Queue`. / **Basic data structures**: `Node`, `LinkedList`, `Stack`, `Queue`. |
+| [`data_structures_advanced/`](data_structures_advanced/) | ✅ | **Estructuras de datos avanzadas**: `BinaryTree` (ABB), `Graph` (Grafo dirigido). / **Advanced data structures**: `BinaryTree` (BST), `Graph` (Directed graph). |
 
 ---
 
@@ -24,6 +25,10 @@ bazelisk test //...
 
 # Data Structures Basics
 cd cpp/core/algorithms/data_structures_basics
+bazelisk test //...
+
+# Data Structures Advanced
+cd cpp/core/algorithms/data_structures_advanced
 bazelisk test //...
 ```
 
