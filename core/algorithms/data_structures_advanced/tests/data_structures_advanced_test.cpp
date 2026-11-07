@@ -47,17 +47,21 @@ void run_cases(std::initializer_list<NamedCase> cases)
 void expect_neighbors(const Graph& graph, int label, const Neighbors& expected, const char* subject)
 {
     const std::unique_ptr<Neighbors> actual = graph.get_neighbors(label);
-    ASSERT_NE(actual, nullptr) << subject << " should return a neighbour sequence for a registered vertex";
+    ASSERT_NE(actual, nullptr)
+        << subject << " should return a neighbour sequence for a registered vertex";
     EXPECT_EQ(*actual, expected) << subject << " should return the expected sorted neighbours";
 }
 
 void expect_counts(const Graph& graph, std::size_t vertices, std::size_t edges, const char* subject)
 {
-    EXPECT_EQ(graph.vertex_count(), vertices) << subject << " should report the expected vertex count";
+    EXPECT_EQ(graph.vertex_count(), vertices)
+        << subject << " should report the expected vertex count";
     EXPECT_EQ(graph.edge_count(), edges) << subject << " should report the expected edge count";
 }
 
-void expect_tree_contains(const BinaryTree& tree, std::initializer_list<int> values, const char* subject)
+void expect_tree_contains(const BinaryTree& tree,
+                          std::initializer_list<int> values,
+                          const char* subject)
 {
     for (int value : values) {
         EXPECT_TRUE(tree.contains(value)) << subject << " should contain " << value;
@@ -71,12 +75,15 @@ TEST_F(DataStructuresAdvancedTests, treeNodeOperations)
     run_cases({
         {"create a tree node", [] {
              TreeNode node(kRootValue);
-             EXPECT_EQ(node.get_value(), kRootValue) << "TreeNode should retain its initialized value";
+             EXPECT_EQ(node.get_value(), kRootValue)
+                 << "TreeNode should retain its initialized value";
          }},
         {"absent initial links", [] {
              TreeNode node(kRootValue);
-             EXPECT_EQ(node.get_left(), nullptr) << "TreeNode should start with an absent left link";
-             EXPECT_EQ(node.get_right(), nullptr) << "TreeNode should start with an absent right link";
+             EXPECT_EQ(node.get_left(), nullptr)
+                 << "TreeNode should start with an absent left link";
+             EXPECT_EQ(node.get_right(), nullptr)
+                 << "TreeNode should start with an absent right link";
          }},
         {"link two children", [] {
              TreeNode parent(kRootValue);
@@ -85,10 +92,14 @@ TEST_F(DataStructuresAdvancedTests, treeNodeOperations)
              parent.set_left(&left);
              parent.set_right(&right);
 
-             ASSERT_NE(parent.get_left(), nullptr) << "TreeNode should expose the linked left child";
-             ASSERT_NE(parent.get_right(), nullptr) << "TreeNode should expose the linked right child";
-             EXPECT_EQ(parent.get_left()->get_value(), kLeftValue) << "Left child should hold its value";
-             EXPECT_EQ(parent.get_right()->get_value(), kRightValue) << "Right child should hold its value";
+             ASSERT_NE(parent.get_left(), nullptr)
+                 << "TreeNode should expose the linked left child";
+             ASSERT_NE(parent.get_right(), nullptr)
+                 << "TreeNode should expose the linked right child";
+             EXPECT_EQ(parent.get_left()->get_value(), kLeftValue)
+                 << "Left child should hold its value";
+             EXPECT_EQ(parent.get_right()->get_value(), kRightValue)
+                 << "Right child should hold its value";
          }},
         {"traverse each link", [] {
              TreeNode parent(kRootValue);
@@ -101,12 +112,18 @@ TEST_F(DataStructuresAdvancedTests, treeNodeOperations)
              const TreeNode* reached_right = parent.get_right();
              ASSERT_NE(reached_left, nullptr) << "Traversal should reach the left child";
              ASSERT_NE(reached_right, nullptr) << "Traversal should reach the right child";
-             EXPECT_EQ(reached_left->get_value(), kLeftValue) << "Left traversal should lead to its value";
-             EXPECT_EQ(reached_right->get_value(), kRightValue) << "Right traversal should lead to its value";
-             EXPECT_EQ(reached_left->get_left(), nullptr) << "Left child should have an absent left link";
-             EXPECT_EQ(reached_left->get_right(), nullptr) << "Left child should have an absent right link";
-             EXPECT_EQ(reached_right->get_left(), nullptr) << "Right child should have an absent left link";
-             EXPECT_EQ(reached_right->get_right(), nullptr) << "Right child should have an absent right link";
+             EXPECT_EQ(reached_left->get_value(), kLeftValue)
+                 << "Left traversal should lead to its value";
+             EXPECT_EQ(reached_right->get_value(), kRightValue)
+                 << "Right traversal should lead to its value";
+             EXPECT_EQ(reached_left->get_left(), nullptr)
+                 << "Left child should have an absent left link";
+             EXPECT_EQ(reached_left->get_right(), nullptr)
+                 << "Left child should have an absent right link";
+             EXPECT_EQ(reached_right->get_left(), nullptr)
+                 << "Right child should have an absent left link";
+             EXPECT_EQ(reached_right->get_right(), nullptr)
+                 << "Right child should have an absent right link";
          }},
         {"unlink children", [] {
              TreeNode parent(kRootValue);
@@ -116,16 +133,22 @@ TEST_F(DataStructuresAdvancedTests, treeNodeOperations)
              parent.set_right(&right);
 
              parent.set_left(nullptr);
-             EXPECT_EQ(parent.get_left(), nullptr) << "TreeNode should have no left child after unlinking it";
-             EXPECT_EQ(parent.get_value(), kRootValue) << "TreeNode should keep its value after unlinking left";
-             ASSERT_NE(parent.get_right(), nullptr) << "TreeNode should keep its right child after unlinking left";
+             EXPECT_EQ(parent.get_left(), nullptr)
+                 << "TreeNode should have no left child after unlinking it";
+             EXPECT_EQ(parent.get_value(), kRootValue)
+                 << "TreeNode should keep its value after unlinking left";
+             ASSERT_NE(parent.get_right(), nullptr)
+                 << "TreeNode should keep its right child after unlinking left";
              EXPECT_EQ(parent.get_right()->get_value(), kRightValue)
                  << "TreeNode should keep the right child value after unlinking left";
 
              parent.set_right(nullptr);
-             EXPECT_EQ(parent.get_left(), nullptr) << "TreeNode should have an absent left link after both unlinks";
-             EXPECT_EQ(parent.get_right(), nullptr) << "TreeNode should have an absent right link after both unlinks";
-             EXPECT_EQ(parent.get_value(), kRootValue) << "TreeNode should keep its value after both unlinks";
+             EXPECT_EQ(parent.get_left(), nullptr)
+                 << "TreeNode should have an absent left link after both unlinks";
+             EXPECT_EQ(parent.get_right(), nullptr)
+                 << "TreeNode should have an absent right link after both unlinks";
+             EXPECT_EQ(parent.get_value(), kRootValue)
+                 << "TreeNode should keep its value after both unlinks";
          }},
     });
 }
@@ -137,13 +160,15 @@ TEST_F(DataStructuresAdvancedTests, binaryTreeOperations)
              BinaryTree tree;
              EXPECT_TRUE(tree.is_empty()) << "BinaryTree should be empty after initialization";
              EXPECT_EQ(tree.size(), 0U) << "BinaryTree should have size zero after initialization";
-             EXPECT_FALSE(tree.contains(kTreeRoot)) << "Empty BinaryTree should not contain any value";
+             EXPECT_FALSE(tree.contains(kTreeRoot))
+                 << "Empty BinaryTree should not contain any value";
          }},
         {"insert the root", [] {
              BinaryTree tree;
              EXPECT_TRUE(tree.insert(kTreeRoot)) << "BinaryTree should accept the root insertion";
              EXPECT_EQ(tree.size(), 1U) << "BinaryTree should count the root";
-             EXPECT_FALSE(tree.is_empty()) << "BinaryTree should not be empty after inserting the root";
+             EXPECT_FALSE(tree.is_empty())
+                 << "BinaryTree should not be empty after inserting the root";
              EXPECT_TRUE(tree.contains(kTreeRoot)) << "BinaryTree should contain the inserted root";
          }},
         {"insert lower and higher", [] {
@@ -160,14 +185,18 @@ TEST_F(DataStructuresAdvancedTests, binaryTreeOperations)
                  EXPECT_TRUE(tree.insert(value)) << "BinaryTree should accept " << value;
              }
              EXPECT_EQ(tree.size(), 5U) << "BinaryTree should count five distinct values";
-             expect_tree_contains(tree, {kTreeRoot, kTreeLow, kTreeHigh, kTreeLowLeft, kTreeLowRight}, "BinaryTree");
+             expect_tree_contains(
+                 tree, {kTreeRoot, kTreeLow, kTreeHigh, kTreeLowLeft, kTreeLowRight},
+                 "BinaryTree");
          }},
         {"missing value in nonempty tree", [] {
              BinaryTree tree;
              EXPECT_TRUE(tree.insert(kTreeRoot)) << "BinaryTree should accept the root";
-             EXPECT_FALSE(tree.contains(kMissingValue)) << "BinaryTree should not contain a value never inserted";
+             EXPECT_FALSE(tree.contains(kMissingValue))
+                 << "BinaryTree should not contain a value never inserted";
              EXPECT_EQ(tree.size(), 1U) << "BinaryTree lookup should not change the size";
-             EXPECT_TRUE(tree.contains(kTreeRoot)) << "BinaryTree should still contain the root after a miss";
+             EXPECT_TRUE(tree.contains(kTreeRoot))
+                 << "BinaryTree should still contain the root after a miss";
          }},
         {"idempotent duplicate", [] {
              BinaryTree tree;
@@ -183,8 +212,11 @@ TEST_F(DataStructuresAdvancedTests, binaryTreeOperations)
                  EXPECT_TRUE(tree.insert(value)) << "BinaryTree should accept " << value;
              }
              EXPECT_EQ(tree.size(), 5U) << "BinaryTree should count five ascending values";
-             expect_tree_contains(tree, {kTreeLowLeft, kTreeLow, kTreeLowRight, kTreeRoot, kTreeHigh}, "BinaryTree");
-             EXPECT_FALSE(tree.contains(kMissingValue)) << "BinaryTree should not contain a missing value";
+             expect_tree_contains(
+                 tree, {kTreeLowLeft, kTreeLow, kTreeLowRight, kTreeRoot, kTreeHigh},
+                 "BinaryTree");
+             EXPECT_FALSE(tree.contains(kMissingValue))
+                 << "BinaryTree should not contain a missing value";
          }},
     });
 }
@@ -197,7 +229,8 @@ TEST_F(DataStructuresAdvancedTests, graphOperations)
              EXPECT_TRUE(graph.is_empty()) << "Graph should be empty after initialization";
              expect_counts(graph, 0U, 0U, "Empty Graph");
              EXPECT_FALSE(graph.has_edge(kLabelA, kLabelB)) << "Empty Graph should have no edges";
-             EXPECT_EQ(graph.get_neighbors(kLabelA), nullptr) << "Empty Graph should fail neighbours of a missing vertex";
+             EXPECT_EQ(graph.get_neighbors(kLabelA), nullptr)
+                 << "Empty Graph should fail neighbours of a missing vertex";
          }},
         {"isolated vertex", [] {
              Graph graph;
@@ -210,9 +243,12 @@ TEST_F(DataStructuresAdvancedTests, graphOperations)
              Graph graph;
              EXPECT_TRUE(graph.add_vertex(kLabelA)) << "Graph should register the first label";
              EXPECT_TRUE(graph.add_vertex(kLabelD)) << "Graph should register the second label";
-             EXPECT_TRUE(graph.add_edge(kLabelA, kLabelD)) << "Graph should add an edge between registered vertices";
-             EXPECT_TRUE(graph.has_edge(kLabelA, kLabelD)) << "Graph should report the forward edge";
-             EXPECT_FALSE(graph.has_edge(kLabelD, kLabelA)) << "Graph should not report the reverse edge";
+             EXPECT_TRUE(graph.add_edge(kLabelA, kLabelD))
+                 << "Graph should add an edge between registered vertices";
+             EXPECT_TRUE(graph.has_edge(kLabelA, kLabelD))
+                 << "Graph should report the forward edge";
+             EXPECT_FALSE(graph.has_edge(kLabelD, kLabelA))
+                 << "Graph should not report the reverse edge";
              expect_counts(graph, 2U, 1U, "Directed Graph");
          }},
         {"duplicate vertex preserves adjacency", [] {
@@ -229,7 +265,8 @@ TEST_F(DataStructuresAdvancedTests, graphOperations)
              EXPECT_TRUE(graph.add_vertex(kLabelA)) << "Graph should register the first label";
              EXPECT_TRUE(graph.add_vertex(kLabelB)) << "Graph should register the second label";
              EXPECT_TRUE(graph.add_edge(kLabelA, kLabelB)) << "Graph should add the edge";
-             EXPECT_TRUE(graph.add_edge(kLabelA, kLabelB)) << "Graph should succeed on a duplicate edge";
+             EXPECT_TRUE(graph.add_edge(kLabelA, kLabelB))
+                 << "Graph should succeed on a duplicate edge";
              expect_counts(graph, 2U, 1U, "Graph after duplicate edge");
              expect_neighbors(graph, kLabelA, {kLabelB}, "Duplicate edge");
          }},
@@ -238,19 +275,29 @@ TEST_F(DataStructuresAdvancedTests, graphOperations)
              EXPECT_TRUE(graph.add_vertex(kLabelA)) << "Graph should register the first label";
              EXPECT_TRUE(graph.add_vertex(kLabelB)) << "Graph should register the second label";
              EXPECT_TRUE(graph.add_edge(kLabelA, kLabelB)) << "Graph should add the edge";
-             EXPECT_FALSE(graph.add_edge(kLabelA, kMissingLabelB)) << "Graph should fail with a missing target";
-             EXPECT_FALSE(graph.add_edge(kMissingLabelB, kLabelA)) << "Graph should fail with a missing source";
-             EXPECT_FALSE(graph.add_edge(kMissingLabelA, kMissingLabelB)) << "Graph should fail with both endpoints missing";
-             EXPECT_FALSE(graph.add_edge(kMissingLabelB, kMissingLabelB)) << "Graph should fail a self-loop on a missing vertex";
+             EXPECT_FALSE(graph.add_edge(kLabelA, kMissingLabelB))
+                 << "Graph should fail with a missing target";
+             EXPECT_FALSE(graph.add_edge(kMissingLabelB, kLabelA))
+                 << "Graph should fail with a missing source";
+             EXPECT_FALSE(graph.add_edge(kMissingLabelA, kMissingLabelB))
+                 << "Graph should fail with both endpoints missing";
+             EXPECT_FALSE(graph.add_edge(kMissingLabelB, kMissingLabelB))
+                 << "Graph should fail a self-loop on a missing vertex";
              expect_counts(graph, 2U, 1U, "Graph after failed edges");
              expect_neighbors(graph, kLabelA, {kLabelB}, "Vertex A after failed edges");
              expect_neighbors(graph, kLabelB, {}, "Vertex B after failed edges");
-             EXPECT_FALSE(graph.has_edge(kLabelA, kMissingLabelB)) << "Graph should not report a failed target edge";
-             EXPECT_FALSE(graph.has_edge(kMissingLabelB, kLabelA)) << "Graph should not report a failed source edge";
-             EXPECT_FALSE(graph.has_edge(kMissingLabelA, kMissingLabelB)) << "Graph should not report a failed missing edge";
-             EXPECT_FALSE(graph.has_edge(kMissingLabelB, kMissingLabelB)) << "Graph should not report a failed missing loop";
-             EXPECT_EQ(graph.get_neighbors(kMissingLabelA), nullptr) << "Graph should not create the first missing vertex";
-             EXPECT_EQ(graph.get_neighbors(kMissingLabelB), nullptr) << "Graph should not create the second missing vertex";
+             EXPECT_FALSE(graph.has_edge(kLabelA, kMissingLabelB))
+                 << "Graph should not report a failed target edge";
+             EXPECT_FALSE(graph.has_edge(kMissingLabelB, kLabelA))
+                 << "Graph should not report a failed source edge";
+             EXPECT_FALSE(graph.has_edge(kMissingLabelA, kMissingLabelB))
+                 << "Graph should not report a failed missing edge";
+             EXPECT_FALSE(graph.has_edge(kMissingLabelB, kMissingLabelB))
+                 << "Graph should not report a failed missing loop";
+             EXPECT_EQ(graph.get_neighbors(kMissingLabelA), nullptr)
+                 << "Graph should not create the first missing vertex";
+             EXPECT_EQ(graph.get_neighbors(kMissingLabelB), nullptr)
+                 << "Graph should not create the second missing vertex";
          }},
         {"sorted neighbours and counts", [] {
              Graph graph;
@@ -271,7 +318,8 @@ TEST_F(DataStructuresAdvancedTests, graphOperations)
              Graph graph;
              EXPECT_TRUE(graph.add_vertex(kLabelA)) << "Graph should register the first label";
              EXPECT_TRUE(graph.add_vertex(kLabelB)) << "Graph should register the second label";
-             EXPECT_FALSE(graph.has_edge(kLabelA, kLabelB)) << "Graph should not report an absent edge";
+             EXPECT_FALSE(graph.has_edge(kLabelA, kLabelB))
+                 << "Graph should not report an absent edge";
              expect_counts(graph, 2U, 0U, "Graph without edges");
              EXPECT_FALSE(graph.is_empty()) << "Graph with vertices should not be empty";
          }},
@@ -287,7 +335,8 @@ TEST_F(DataStructuresAdvancedTests, graphOperations)
              Graph graph;
              EXPECT_TRUE(graph.add_vertex(kLabelA)) << "Graph should register a vertex";
              EXPECT_TRUE(graph.add_edge(kLabelA, kLabelA)) << "Graph should add a self-loop";
-             EXPECT_TRUE(graph.add_edge(kLabelA, kLabelA)) << "Graph should succeed on a duplicate self-loop";
+             EXPECT_TRUE(graph.add_edge(kLabelA, kLabelA))
+                 << "Graph should succeed on a duplicate self-loop";
              EXPECT_TRUE(graph.has_edge(kLabelA, kLabelA)) << "Graph should report the self-loop";
              expect_neighbors(graph, kLabelA, {kLabelA}, "Self-loop vertex");
              expect_counts(graph, 1U, 1U, "Graph with a self-loop");
@@ -305,6 +354,9 @@ TEST_F(DataStructuresAdvancedTests, graphOperations)
              ASSERT_NE(other_copy, nullptr) << "Graph should return another neighbour copy";
              other_copy->push_back(kMissingLabelB);
 
+             EXPECT_TRUE(graph.add_edge(kLabelA, kLabelC)) << "Graph should add 10 -> 50";
+             EXPECT_EQ(*saved, (Neighbors{kLabelB}))
+                 << "Saved neighbours should ignore later insertions";
              expect_neighbors(graph, kLabelA, {kLabelB, kLabelC}, "Fresh neighbour query");
              expect_counts(graph, 3U, 2U, "Graph after isolation scenario");
          }},

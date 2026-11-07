@@ -20,7 +20,7 @@ private:
     int value_;
 };
 
-class TreeNode : public Node {
+class TreeNode final : public Node {
 public:
     explicit TreeNode(int value);
     [[nodiscard]] TreeNode* get_left() const;
@@ -52,7 +52,7 @@ private:
     std::size_t count_;
 };
 
-class GraphNode : public Node {
+class GraphNode final : public Node {
     friend class Graph;
 
 private:
@@ -85,6 +85,10 @@ private:
     GraphNode* vertices_;
     std::size_t vertex_total_;
     std::size_t edges_;
+
+    // Solo lectura: un objeto const no debe alcanzar nodos mutables.
+    [[nodiscard]] GraphNode* find_vertex(int label);
+    [[nodiscard]] const GraphNode* find_vertex(int label) const;
 };
 
 } // namespace data_structures_advanced
